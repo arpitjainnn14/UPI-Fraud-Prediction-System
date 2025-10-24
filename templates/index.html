@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPI Fraud Detection System</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+    
+    <!-- Floating Help Button -->
+    <div class="help-button" id="helpButton">
+        <i class="fas fa-info"></i>
+        <div class="help-tooltip">
+            <h4><i class="fas fa-question-circle"></i> How to Use</h4>
+            <ul>
+                <li><strong>Transaction Hour:</strong> Enter hour (0-23) when transaction occurred</li>
+                <li><strong>Transaction Day:</strong> Enter day of month (1-31)</li>
+                <li><strong>Transaction Month:</strong> Enter month number (1-12)</li>
+                <li><strong>Transaction Year:</strong> Enter year (2020-2030)</li>
+                <li><strong>Transaction Amount:</strong> Enter the transaction amount in rupees</li>
+                <li><strong>UPI Number:</strong> Enter the UPI number/identifier</li>
+            </ul>
+            <p class="help-note">
+                <i class="fas fa-lightbulb"></i>
+                Our AI model analyzes these details to detect potential fraud patterns
+            </p>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <h1>UPI Fraud Prediction System</h1>
+            <p class="subtitle">An ML-Powered UPI Transaction Risk Analysis Platform</p>
+        </div>
+
+        <div class="container">
+            <div class="form-header">
+                <i class="fas fa-user-shield"></i>
+                <h2>Transaction Details</h2>
+            </div>
+            
+            <form action="/predict" method="post" id="predictionForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="trans_hour">
+                            <i class="fas fa-clock"></i>
+                            Transaction Hour
+                        </label>
+                        <input type="number" id="trans_hour" name="trans_hour" min="0" max="23" required class="input-box" placeholder="0-23">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trans_day">
+                            <i class="fas fa-calendar-day"></i>
+                            Transaction Day
+                        </label>
+                        <input type="number" id="trans_day" name="trans_day" min="1" max="31" required class="input-box" placeholder="1-31">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trans_month">
+                            <i class="fas fa-calendar-alt"></i>
+                            Transaction Month
+                        </label>
+                        <input type="number" id="trans_month" name="trans_month" min="1" max="12" required class="input-box" placeholder="1-12">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trans_year">
+                            <i class="fas fa-calendar"></i>
+                            Transaction Year
+                        </label>
+                        <input type="number" id="trans_year" name="trans_year" min="2020" max="2030" required class="input-box" placeholder="YYYY">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="trans_amount">
+                            <i class="fas fa-rupee-sign"></i>
+                            Transaction Amount
+                        </label>
+                        <input type="number" id="trans_amount" name="trans_amount" step="0.01" min="0" required class="input-box" placeholder="Enter amount">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="upi_number">
+                            <i class="fas fa-mobile-alt"></i>
+                            UPI Number
+                        </label>
+                        <input type="text" id="upi_number" name="upi_number" required class="input-box" placeholder="Enter UPI number">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-search"></i>
+                    Analyze Transaction
+                </button>
+            </form>
+
+            {% if result %}
+            <div class="results {{ 'fraud' if result == 'Fraud' else 'not-fraud' }}" id="results">
+                <div class="result-icon">
+                    {% if result == 'Fraud' %}
+                        <i class="fas fa-shield-virus"></i>
+                    {% else %}
+                        <i class="fas fa-shield-check"></i>
+                    {% endif %}
+                </div>
+                <h3>{{ "⚠️ THREAT DETECTED" if result == 'Fraud' else "✓ SECURE TRANSACTION" }}</h3>
+                <p class="result-message">
+                    {% if result == 'Fraud' %}
+                        <strong>ALERT:</strong> This transaction exhibits suspicious patterns consistent with fraudulent activity. Immediate verification recommended.
+                    {% else %}
+                        <strong>VERIFIED:</strong> Transaction analysis complete. No anomalies detected. This appears to be a legitimate transaction.
+                    {% endif %}
+                </p>
+                <div class="scan-animation"></div>
+            </div>
+            {% endif %}
+        </div>
+
+        <footer>
+            <p><i class="fas fa-brain"></i> Powered by Advanced Machine Learning | <i class="fas fa-server"></i> FastAPI Backend</p>
+            <a href="/developers" class="developer-btn">
+                <i class="fas fa-code"></i>
+                Meet the Developers
+            </a>
+        </footer>
+    </div>
+</body>
+</html>
