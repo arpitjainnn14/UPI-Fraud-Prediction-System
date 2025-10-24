@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Model files (except the one we use)
+logistic_regression_model.pkl
+decision_tree_model.pkl
+random_forest_model.pkl
+support_vector_machine_model.pkl
+
+# Data files
+upi_fraud_dataset.csv
+
+# Training scripts
+4algos.py
+test_model.py
+check.py
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Images (if not needed)
+*.webp
+*.png
+*.jpg
+*.jpeg
+
+# Logs
+*.log
