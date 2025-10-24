@@ -5,17 +5,23 @@ from fastapi.staticfiles import StaticFiles
 import joblib
 import pandas as pd
 import uvicorn
+import os
 
 app = FastAPI()
 
+# Get the absolute path to the static directory
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+templates_dir = os.path.join(os.path.dirname(__file__), "templates")
+
 # Mount static files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # Setup templates
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=templates_dir)
 
-# Load the trained model
-model = joblib.load("rf_model.pkl")
+# Load the trained model with absolute path
+model_path = os.path.join(os.path.dirname(__file__), "rf_model.pkl")
+model = joblib.load(model_path)
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
@@ -56,5 +62,9 @@ async def predict(
 
     return templates.TemplateResponse("index.html", {"request": request, "result": result})
 
+# For Vercel serverless deployment
+# The app instance is automatically used by Vercel
+
+# For local development only
 if __name__ == '__main__':
     uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
