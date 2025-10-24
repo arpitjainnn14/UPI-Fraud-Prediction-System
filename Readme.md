@@ -130,12 +130,3 @@ See `requirements.txt`. At a minimum the project needs:
 Include your preferred license here. If you'd like, I can add an `LICENSE` file.
 
 Maintainers / Developers: See `templates/developers.html` for the project's developer credits.
-
----
-
-If you'd like, I can also:
-
-- Update `app.py` to load the model saved by `4algos.py` automatically, or
-- Modify `4algos.py` to explicitly save a file named `rf_model.pkl` to match `app.py`.
-
-Let me know which option you prefer and I can make that change.
